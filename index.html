@@ -1,0 +1,70 @@
+<!doctype HTML>
+<html>
+<head>
+
+    <script src="https://aframe.io/releases/0.9.2/aframe.min.js"></script>
+    <script src="https://cdn.rawgit.com/jeromeetienne/AR.js/1.7.7/aframe/build/aframe-ar.js"></script>
+    <script src="https://raw.githack.com/donmccurdy/aframe-extras/master/dist/aframe-extras.loaders.min.js"></script>
+    <script>
+        AFRAME.registerComponent('vidhandler', {
+            // ...
+            init: function () {
+                // Set up initial state and variables.
+                this.toggle = false;
+                this.vid = document.querySelector("#BS0i6")
+                this.vid.pause();
+            },
+            tick: function () {
+                if (this.el.object3D.visible == true) {
+                    if (!this.toggle) {
+                        this.toggle = true;
+                        this.vid.play();
+                    }
+                } else {
+                    this.toggle = false;
+                    this.vid.pause();
+                }
+            }
+        });
+
+    </script>
+
+
+</head>
+
+<body style='margin : 0px; overflow: hidden;'>
+    <a-scene embedded arjs='sourceType: webcam; debugUIEnabled: false; detectionMode: mono_and_matrix; matrixCodeType: 3x3;'>
+
+        
+<a-assets>
+    <a-asset-item id="animated-asset" src="https://raw.githubusercontent.com/arjanvanbekkum/arjanvanbekkum.github.io/master/augmentedreality/scene.gltf"></a-asset-item>
+    <video crossorigin="anonymous" id="BS0i6" controls="true" autoplay="true" loop="true" type="video/mp4" src="https://raw.githubusercontent.com/arjanvanbekkum/arjanvanbekkum.github.io/master/augmentedreality/sw.mp4">  
+</a-assets>
+
+<a-marker type="pattern" preset="custom" url="https://raw.githubusercontent.com/arjanvanbekkum/arjanvanbekkum.github.io/master/augmentedreality/epicshit.patt">
+    <a-box position='0 0.5 0' material='opacity: 0.5; side: double'>
+        <a-torus-knot radius='0.26' radius-tubular='0.05' animation="property: rotation; to: 0 360 0; loop: true; dur: 5000"></a-torus-knot>
+    </a-box>
+</a-marker>
+
+<a-marker vidhandler preset="custom" type="pattern" url="https://drive.google.com/file/d/1EVGakK118EXa9Jpo0wzhv3vY-7MK5RWf/view?usp=sharing">
+    <a-box position='0 0.5 0' material='opacity: 0.5; side: double'>
+        <a-video  src="#BS0i6" position="0 0.5 0" rotation="270 0 0" play="true" width=2 height=2 ></a-video>
+    </a-box>
+</a-marker>
+
+
+
+<a-entity camera></a-entity>
+
+</a-scene>
+
+<script>
+    window.addEventListener('click', function () {
+    var v = document.querySelector('#BS0i6');
+    v.play();
+    });
+</script>
+  
+ </body>
+</html>
